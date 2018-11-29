@@ -1,4 +1,4 @@
-# coding352
+# 100 Days of Code with Python
 This folder is to hold our work on the 100 Days of Python course from talkpython.fm.
 If you have other work to share, you can create separate folders in the root of this repo
 
