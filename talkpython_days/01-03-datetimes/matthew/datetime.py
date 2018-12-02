@@ -27,6 +27,6 @@ christmas - todaydate
 (christmas - todaydate).days
 
 if christmas is not today:
-    print("There are " +str((christmas - todaydate).days) + " until Christmas!")
+    print("There are " + str((christmas - todaydate).days) + " days until Christmas!")
 else:
     print("It's Christmas")
