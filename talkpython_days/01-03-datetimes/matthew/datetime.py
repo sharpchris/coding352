@@ -31,5 +31,3 @@ if christmas is not today:
 else:
     print("It's Christmas")
 
-#test
-
