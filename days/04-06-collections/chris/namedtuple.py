@@ -25,6 +25,8 @@ users = {'bob': 'coder'}
 
 print(users.get('bob'))
 print(users.get('julian')) # doesn't error out, retuns None
+# users.julian would throw a KeyErros
+# probably best to just use the get method everytime?
 
 # building up a collection:
 
