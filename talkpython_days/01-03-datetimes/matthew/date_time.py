@@ -4,25 +4,26 @@ from datetime import date
 datetime.today()
 
 today = datetime.today()
-type(today)
+
+print(type(today))
 
 todaydate = date.today()
 
-type(todaydate)
+print(type(todaydate))
 
-todaydate
+print(todaydate)
 
-todaydate.month
+print(todaydate.month)
 
-todaydate.day
+print(todaydate.day)
 
-todaydate.year
+print(todaydate.year)
 
 christmas = date(2018, 12, 25)
 
-christmas
+print(christmas)
 
-christmas - todaydate
+print(christmas - todaydate)
 
 (christmas - todaydate).days
 
