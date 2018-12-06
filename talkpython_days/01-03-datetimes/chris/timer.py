@@ -11,7 +11,7 @@ final_time = datetime.now() + time_interval
 print("The timer will go off at " + str(final_time))
 
 while datetime.today() < final_time:
-    print("There are " + str((final_time - datetime.now()).seconds) + " seconds left on the timer.")
+    print("There are " + str((final_time - datetime.now()).seconds) + " seconds left on the timer.", end='\r')
     sleep(1)
 
 print("RING RING RING! Time's up!!")
