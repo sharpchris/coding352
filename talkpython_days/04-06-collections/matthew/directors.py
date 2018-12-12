@@ -15,7 +15,8 @@ with open('movie_metadata.csv', encoding='utf-8') as f:
         directors[row['director_name']].append(movie)
 # print it out though the '\n\n' part doesn't do anything for me
     print(directors['Woody Allen'], end='\n\n')
-
+    for movie in directors['Woody Allen']:
+        print(movie)
 ctr = Counter()
 
 # loop through the directors
