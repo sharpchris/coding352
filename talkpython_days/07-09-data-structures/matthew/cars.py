@@ -27,9 +27,10 @@ def get_all_matching_models(cars=cars, grep='trail'):
     my_list= []
     for v in cars.values():
         for model in v:
-            if grep in model.lower():
+            if grep.lower() in model.lower():
                 my_list.append(model)
-                print(my_list)
+    my_list.sort()
+    print(my_list)
     return my_list
                 
 
@@ -40,7 +41,7 @@ def sort_car_models(cars=cars):
     print(cars)
     return cars
 
-# get_all_jeeps()
-# get_first_model_each_manufacturer()
-# get_all_matching_models()
+get_all_jeeps()
+get_first_model_each_manufacturer()
+get_all_matching_models()
 sort_car_models()
