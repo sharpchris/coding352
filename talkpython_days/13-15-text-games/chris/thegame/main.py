@@ -22,6 +22,12 @@ def play_game():
     # While there are still cards in the deck and hand...
     while deck.cards or hand1.cards:
 
+        # Get a list of stack states with directions
+        print("The stacks are:")
+        states = []
+        for stack in stacks:
+            print(str(stack.state) + " " + stack.direction)
+
         # Determine how many cards MUST be played
         if deck.cards:
             requirement = 2
@@ -36,12 +42,6 @@ def play_game():
         hand1.draw(deck)
 
         print("I have the following cards in hand: " + ", ".join(hand1.cards_as_str()))
-        
-        # Get a list of stack states with directions
-        print("The stacks are:")
-        states = []
-        for stack in stacks:
-            print(str(stack.state) + " " + stack.direction)
 
     # The game is over (didn't have enough plays)
     print("Done")

@@ -23,5 +23,8 @@ print(f"The best game had {str(min(outcomes))} remaining.")
 print(f"The worst game had {str(max(outcomes))} remaining.")
 print(f"The average game had {str(mean(outcomes))} cards remaining.")
 print(f"The median game had {str(median(outcomes))} cards remaining.")
-print(f"The mode was {str(mode(outcomes))} cards remaining.")
+try:
+    print(f"The mode was {str(mode(outcomes))} cards remaining.")
+except StatisticsError:
+    print("There was more than one most common value, so there is no mode.")
 print(outcomes)
