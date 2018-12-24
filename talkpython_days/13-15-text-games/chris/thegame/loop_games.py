@@ -1,8 +1,9 @@
 from main import play_game
 from statistics import mean, median, mode
+from collections import Counter
 import os, sys
 
-NUMBER_OF_GAMES = 1500
+NUMBER_OF_GAMES = 1000
 class HiddenPrints:
     def __enter__(self):
         self._original_stdout = sys.stdout
@@ -25,6 +26,13 @@ print(f"The average game had {str(mean(outcomes))} cards remaining.")
 print(f"The median game had {str(median(outcomes))} cards remaining.")
 try:
     print(f"The mode was {str(mode(outcomes))} cards remaining.")
-except StatisticsError:
+except statistics.StatisticsError as error:
     print("There was more than one most common value, so there is no mode.")
-print(outcomes)
+
+wins = outcomes.count(0)
+counts = Counter(outcomes)
+excellents = 0
+for x in range(0,11):
+    excellents += counts[x]
+print(f"You won {str(wins)} times for a win percentage of {str((wins/NUMBER_OF_GAMES)*100)}%.")
+print(f"You had an excellent result (10 or fewer cards) {str((excellents/NUMBER_OF_GAMES)*100)}% of the time.")
