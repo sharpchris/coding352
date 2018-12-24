@@ -13,7 +13,7 @@ class HiddenPrints:
         sys.stdout.close()
         sys.stdout = self._original_stdout
 
-print(f"We are going to play {NUMBER_OF_GAMES} games. Please stand by.")
+print(f"We are going to play {NUMBER_OF_GAMES} games. Please stand by.", end='\n\n')
 outcomes = []
 with HiddenPrints():
     for _ in range(NUMBER_OF_GAMES):
@@ -35,4 +35,6 @@ excellents = 0
 for x in range(0,11):
     excellents += counts[x]
 print(f"You won {str(wins)} times for a win percentage of {str((wins/NUMBER_OF_GAMES)*100)}%.")
-print(f"You had an excellent result (10 or fewer cards) {str((excellents/NUMBER_OF_GAMES)*100)}% of the time.")
+print(f"You had an excellent result (10 or fewer cards) {str((excellents/NUMBER_OF_GAMES)*100)}% of the time.", end='\n\n')
+
+print(outcomes)
