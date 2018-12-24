@@ -4,7 +4,7 @@ cars = {
     'Holden': ['Commodore', 'Captiva', 'Barina', 'Trailblazer'],
     'Nissan': ['Maxima', 'Pulsar', '350Z', 'Navara'],
     'Honda': ['Civic', 'Accord', 'Odyssey', 'Jazz'],
-    'Jeep': ['Grand Cherokee', 'Cherokee', 'Trailhawk', 'Trackhawk']
+    'Jeep': ['Grand Cherokee', 'Cherokee', 'Trailhawk', 'Trackhawk', 'Hawktrailer']
 }
 
 space = '+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+'
@@ -41,6 +41,8 @@ def get_trails(cars=cars):
         for i in v:
             # Checks if "Trail" is included in name: ref: https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method
             if "Trail" in i:
+                trail_cars.append(i)
+            elif "trail" in i:
                 trail_cars.append(i)
     return trail_cars
 
