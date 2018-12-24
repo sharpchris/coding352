@@ -3,7 +3,7 @@ from itertools import product
 from operator import itemgetter
 
 HAND_SIZE = 8
-DIFFERENCE_TOLERANCE = 6
+DIFFERENCE_TOLERANCE = 4
 
 class Deck:
     def __init__(self):
@@ -58,6 +58,9 @@ class Hand:
 
     def size(self):
         return len(self.cards)
+
+    def cards_as_str(self):
+        return [str(card) for card in self.cards]
     
     def play(self, stacks, requirement):
         plays = 0
@@ -81,12 +84,12 @@ class Hand:
                 return plays
 
             # Play the best option
-            play_to_make = possible_plays.pop(0)
-            card_to_play = self.cards.index(play_to_make[0])
-            stack_to_play = self.get_matching_stack(stacks, play_to_make[1])
-            print(f"I'm playing {self.cards[card_to_play]} on the {stack_to_play.state}")
-            stack_to_play.play(self.cards.pop(card_to_play))
+            self.make_a_play(possible_plays.pop(0), stacks)
             plays += 1
+
+            # Check for rollback option
+            if self.check_for_rollback_option(stacks):
+                plays += 1
 
         # Now let's see if we have any good opportunities to get more cards in
         while True:
@@ -101,12 +104,12 @@ class Hand:
                 break
 
             # Play the best option
-            play_to_make = possible_plays.pop(0)
-            card_to_play = self.cards.index(play_to_make[0])
-            stack_to_play = self.get_matching_stack(stacks, play_to_make[1])
-            print(f"I'm playing {self.cards[card_to_play]} on the {stack_to_play.state}")
-            stack_to_play.play(self.cards.pop(card_to_play))
+            self.make_a_play(possible_plays.pop(0), stacks)
             plays += 1
+
+            # Check for rollback option
+            if self.check_for_rollback_option(stacks):
+                plays += 1
 
         return plays
 
@@ -156,3 +159,11 @@ class Hand:
             print("The possible plays are...")
             print(possible_plays)
             return possible_plays
+
+    # play_to_make is a tuple with the format (card # to play, state # of the desired stack, difference)
+    def make_a_play(self, play_to_make, stacks):
+        card_to_play = self.cards.index(play_to_make[0])
+        stack_to_play = self.get_matching_stack(stacks, play_to_make[1])
+        print(f"I'm playing {self.cards[card_to_play]} on the {stack_to_play.state}")
+        stack_to_play.play(self.cards.pop(card_to_play))
+        return True

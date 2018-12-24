@@ -3,7 +3,7 @@ from classes import Deck, Stack, Hand
 def introductions():
     print('Welcome to... The Game', end='\n\n')
 
-def setup_game():
+def play_game():
     # Create and shuffle the Draw deck
     deck = Deck()
     deck.shuffle()
@@ -35,21 +35,27 @@ def setup_game():
             break
         hand1.draw(deck)
 
-        for card in hand1.cards:
-            print(card)
+        print("I have the following cards in hand: " + ", ".join(hand1.cards_as_str()))
+        
+        # Get a list of stack states with directions
+        print("The stacks are:")
+        states = []
+        for stack in stacks:
+            print(str(stack.state) + " " + stack.direction)
 
     # The game is over (didn't have enough plays)
-    print('Done')
+    print("Done")
 
     cards_remaining = deck.size() + hand1.size()
-    print(f'The Game ended with {cards_remaining} cards remaining.')
+    print(f"The Game ended with {cards_remaining} cards remaining.")
     if cards_remaining == 0:
         print("You have won The Game!!")
     elif cards_remaining < 11:
         print("You didn't win, but you did really good!")
     else:
         print("Sorry, you lost The Game. Better luck next time.")
+    return cards_remaining
 
 if __name__ == "__main__":
     introductions()
-    setup_game()
+    play_game()
