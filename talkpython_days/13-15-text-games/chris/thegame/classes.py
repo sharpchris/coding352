@@ -142,18 +142,41 @@ class Hand:
             combinations = product(self.cards, states)
             possible_plays = []
             for option in combinations:
+                direction = option[1][1]
+                card = option[0]
+                stack_state = option[1][0]
                 if option[1][1] == 'ascending':
                     # Evaluate the difference in numbers
-                    difference = option[0] - option[1][0]
+                    difference = card - stack_state
                     # If it is a valid play:
                     if difference > 0:
-                        possible_plays.append((option[0],option[1][0],difference))
+                        possible_plays.append((card, stack_state, difference))
                 else:
                     # Evaluate the difference in numbers
-                    difference = option[1][0] - option[0]
+                    difference = stack_state - card
                     # If it is a valid play:
                     if difference > 0:
-                        possible_plays.append((option[0],option[1][0],difference))
+                        possible_plays.append((card, stack_state, difference))
+
+            # Now check for rollback options internal to the hand
+            for card in self.cards:
+                if (card - 10) in self.cards:
+                    for stack in states:
+                        if stack[1] == 'ascending':
+                            difference = card - stack[0]
+                            if difference > 0:
+                                # Give some extra weight to this play because of the rollback option
+                                print("I found an internal rollback option")
+                                possible_plays.append((card, stack[0], difference - 11))                        
+                if (card + 10) in self.cards:
+                    for stack in states:
+                        if stack[1] == 'descending':
+                            difference = stack[0] - card
+                            if difference > 0:
+                                # Give some extra weight to this play because of the rollback option
+                                print("I found an internal rollback option")
+                                possible_plays.append((card, stack[0], difference - 11)) 
+
             # Sort based on the difference in numbers for the play
             possible_plays.sort(key=itemgetter(2))
             print("The possible plays are...")

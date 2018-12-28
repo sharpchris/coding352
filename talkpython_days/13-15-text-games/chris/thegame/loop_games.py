@@ -3,7 +3,7 @@ from statistics import mean, median, mode
 from collections import Counter
 import os, sys
 
-NUMBER_OF_GAMES = 1000
+NUMBER_OF_GAMES = 2000
 class HiddenPrints:
     def __enter__(self):
         self._original_stdout = sys.stdout
