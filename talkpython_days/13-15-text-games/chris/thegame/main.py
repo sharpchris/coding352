@@ -1,7 +1,9 @@
 from classes import Deck, Stack, Hand
 
+
 def introductions():
-    print('Welcome to... The Game', end='\n\n')
+    print("Welcome to... The Game", end="\n\n")
+
 
 def play_game():
     # Create and shuffle the Draw deck
@@ -9,10 +11,10 @@ def play_game():
     deck.shuffle()
 
     # Create the play stacks
-    stack1 = Stack('ascending')
-    stack2 = Stack('ascending')
-    stack3 = Stack('descending')
-    stack4 = Stack('descending')
+    stack1 = Stack("ascending")
+    stack2 = Stack("ascending")
+    stack3 = Stack("descending")
+    stack4 = Stack("descending")
     stacks = [stack1, stack2, stack3, stack4]
 
     # Create the starting hands
@@ -35,7 +37,7 @@ def play_game():
             requirement = 1
 
         plays = hand1.play(stacks, requirement)
-            
+
         print(f"I was able to play {plays} cards")
         if plays < requirement:
             break
@@ -55,6 +57,7 @@ def play_game():
     else:
         print("Sorry, you lost The Game. Better luck next time.")
     return cards_remaining
+
 
 if __name__ == "__main__":
     introductions()

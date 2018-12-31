@@ -3,17 +3,20 @@ from statistics import mean, median, mode
 from collections import Counter
 import os, sys
 
-NUMBER_OF_GAMES = 2000
+NUMBER_OF_GAMES = 10000
+
+
 class HiddenPrints:
     def __enter__(self):
         self._original_stdout = sys.stdout
-        sys.stdout = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()
         sys.stdout = self._original_stdout
 
-print(f"We are going to play {NUMBER_OF_GAMES} games. Please stand by.", end='\n\n')
+
+print(f"We are going to play {NUMBER_OF_GAMES} games. Please stand by.", end="\n\n")
 outcomes = []
 with HiddenPrints():
     for _ in range(NUMBER_OF_GAMES):
@@ -32,9 +35,14 @@ except:
 wins = outcomes.count(0)
 counts = Counter(outcomes)
 excellents = 0
-for x in range(0,11):
+for x in range(0, 11):
     excellents += counts[x]
-print(f"You won {str(wins)} times for a win percentage of {str((wins/NUMBER_OF_GAMES)*100)}%.")
-print(f"You had an excellent result (10 or fewer cards) {str((excellents/NUMBER_OF_GAMES)*100)}% of the time.", end='\n\n')
+print(
+    f"You won {str(wins)} times for a win percentage of {str((wins/NUMBER_OF_GAMES)*100)}%."
+)
+print(
+    f"You had an excellent result (10 or fewer cards) {str((excellents/NUMBER_OF_GAMES)*100)}% of the time.",
+    end="\n\n",
+)
 
 print(outcomes)

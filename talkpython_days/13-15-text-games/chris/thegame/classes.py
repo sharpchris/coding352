@@ -5,10 +5,11 @@ from operator import itemgetter
 HAND_SIZE = 8
 DIFFERENCE_TOLERANCE = 4
 
+
 class Deck:
     def __init__(self):
-        self.cards = list(range(2,100))
-    
+        self.cards = list(range(2, 100))
+
     def shuffle(self):
         random.shuffle(self.cards)
 
@@ -21,14 +22,15 @@ class Deck:
     def size(self):
         return len(self.cards)
 
+
 class Stack:
     def __init__(self, direction):
         self.direction = direction
-        if direction == 'ascending':
+        if direction == "ascending":
             self.state = 1
         else:
             self.state = 100
-    
+
     def play(self, card):
         self.state = card
 
@@ -36,10 +38,11 @@ class Stack:
         return self.state
 
     def get_rollback_number(self):
-        if self.direction == 'ascending':
+        if self.direction == "ascending":
             return self.state - 10
         else:
             return self.state + 10
+
 
 class Hand:
     def __init__(self):
@@ -54,20 +57,19 @@ class Hand:
                 self.cards.append(card)
             else:
                 break
-            
 
     def size(self):
         return len(self.cards)
 
     def cards_as_str(self):
         return [str(card) for card in self.cards]
-    
+
     def play(self, stacks, requirement):
         plays = 0
         while plays < requirement and self.cards:
             # First check to see if we can roll back any stacks
-            # TODO: check to see if we can chain rollbacks
-            if self.check_for_rollback_option(stacks):
+            # Using "while" to continously check for rollbacks till none found
+            while self.check_for_rollback_option(stacks):
                 plays += 1
 
             # If we are already done, then stop
@@ -100,7 +102,8 @@ class Hand:
                 return plays
 
             # Don't play if the extra card would cost more than the tolerance
-            if possible_plays[0][2] > DIFFERENCE_TOLERANCE:
+            best_difference = possible_plays[0][2]
+            if best_difference > DIFFERENCE_TOLERANCE:
                 break
 
             # Play the best option
@@ -132,56 +135,56 @@ class Hand:
         return False
 
     def get_possible_plays(self, stacks):
-            # Get a list of stack states with directions
-            states = []
-            for stack in stacks:
-                option = (stack.state, stack.direction)
-                states.append(option)
+        # Get a list of stack states with directions
+        states = []
+        for stack in stacks:
+            option = (stack.state, stack.direction)
+            states.append(option)
 
-            # Then find the lowest differences
-            combinations = product(self.cards, states)
-            possible_plays = []
-            for option in combinations:
-                direction = option[1][1]
-                card = option[0]
-                stack_state = option[1][0]
-                if option[1][1] == 'ascending':
-                    # Evaluate the difference in numbers
-                    difference = card - stack_state
-                    # If it is a valid play:
-                    if difference > 0:
-                        possible_plays.append((card, stack_state, difference))
-                else:
-                    # Evaluate the difference in numbers
-                    difference = stack_state - card
-                    # If it is a valid play:
-                    if difference > 0:
-                        possible_plays.append((card, stack_state, difference))
+        # Then find the lowest differences
+        combinations = product(self.cards, states)
+        possible_plays = []
+        for option in combinations:
+            direction = option[1][1]
+            card = option[0]
+            stack_state = option[1][0]
+            if option[1][1] == "ascending":
+                # Evaluate the difference in numbers
+                difference = card - stack_state
+                # If it is a valid play:
+                if difference > 0:
+                    possible_plays.append((card, stack_state, difference))
+            else:
+                # Evaluate the difference in numbers
+                difference = stack_state - card
+                # If it is a valid play:
+                if difference > 0:
+                    possible_plays.append((card, stack_state, difference))
 
-            # Now check for rollback options internal to the hand
-            for card in self.cards:
-                if (card - 10) in self.cards:
-                    for stack in states:
-                        if stack[1] == 'ascending':
-                            difference = card - stack[0]
-                            if difference > 0:
-                                # Give some extra weight to this play because of the rollback option
-                                print("I found an internal rollback option")
-                                possible_plays.append((card, stack[0], difference - 11))                        
-                if (card + 10) in self.cards:
-                    for stack in states:
-                        if stack[1] == 'descending':
-                            difference = stack[0] - card
-                            if difference > 0:
-                                # Give some extra weight to this play because of the rollback option
-                                print("I found an internal rollback option")
-                                possible_plays.append((card, stack[0], difference - 11)) 
+        # Now check for rollback options internal to the hand
+        for card in self.cards:
+            if (card - 10) in self.cards:
+                for stack in states:
+                    if stack[1] == "ascending":
+                        difference = card - stack[0]
+                        if difference > 0:
+                            # Give some extra weight to this play because of the rollback option
+                            print("I found an internal rollback option")
+                            possible_plays.append((card, stack[0], difference - 11))
+            if (card + 10) in self.cards:
+                for stack in states:
+                    if stack[1] == "descending":
+                        difference = stack[0] - card
+                        if difference > 0:
+                            # Give some extra weight to this play because of the rollback option
+                            print("I found an internal rollback option")
+                            possible_plays.append((card, stack[0], difference - 11))
 
-            # Sort based on the difference in numbers for the play
-            possible_plays.sort(key=itemgetter(2))
-            print("The possible plays are...")
-            print(possible_plays)
-            return possible_plays
+        # Sort based on the difference in numbers for the play
+        possible_plays.sort(key=itemgetter(2))
+        print("The possible plays are...")
+        print(possible_plays)
+        return possible_plays
 
     # play_to_make is a tuple with the format (card # to play, state # of the desired stack, difference)
     def make_a_play(self, play_to_make, stacks):
