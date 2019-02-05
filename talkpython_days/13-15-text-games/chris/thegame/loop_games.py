@@ -3,7 +3,7 @@ from statistics import mean, median, mode
 from collections import Counter
 import os, sys
 
-NUMBER_OF_GAMES = 10000
+NUMBER_OF_GAMES = 2000
 
 
 class HiddenPrints:
